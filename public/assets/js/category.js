@@ -36,7 +36,7 @@ $('#categoryBox').on('click', '.edit', function () {
 		type: 'get',
 		url: '/categories/' + id,
 		success: function (response) {
-			console.log(response)
+			// console.log(response)
 			var html = template('modifyCategoryTpl', response);
 			$('#formBox').html(html);
 		}
@@ -77,3 +77,4 @@ $('#categoryBox').on('click', '.delete', function () {
 		})
 	}
 });
+

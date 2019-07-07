@@ -3,12 +3,16 @@ $.ajax({
 	type: 'get',
 	url: '/posts',
 	success: function (response) {
+		console.log(response);
+		
 		var html = template('postsTpl', response);
 		$('#postsBox').html(html);
 		var page = template('pageTpl', response);
 		$('#page').html(page);
 	}
 });
+
+
 
 // 处理日期时间格式
 function formateDate(date) {
@@ -29,7 +33,8 @@ function changePage (page) {
 		success: function (response) {
 			var html = template('postsTpl', response);
 			$('#postsBox').html(html);
-			var page = template('pageTpl', response);
+			var pageHtml = template('pageTpl', response);
+			$('#page').html(pageHtml)
 		}
 	});
 }

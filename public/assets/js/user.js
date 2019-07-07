@@ -127,7 +127,6 @@ selectAll.on('change', function () {
 		// 隐藏批量删除按钮
 		deleteMany.hide();
 	}
-
 	// 获取到所有的用户并将用户的状态和全选按钮保持一致
 	$('#userBox').find('input').prop('checked', status);
 });

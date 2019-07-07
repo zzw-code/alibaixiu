@@ -3,7 +3,7 @@ $.ajax({
 	url: '/categories',
 	type: 'get',
 	success: function (response) {
-		console.log(response)
+		// console.log(response)
 		var html = template('categoryTpl', {data: response});
 		$('#category').html(html);
 	}
@@ -13,6 +13,8 @@ $.ajax({
 $('#feature').on('change', function () {
 	// 获取到管理员选择到的文件
 	var file = this.files[0];
+	console.log(this.files);
+	
 	// 创建formData对象 实现二进制文件上传
 	var formData = new FormData();
 	// 将管理员选择到的文件追加到formData对象中
@@ -27,7 +29,7 @@ $('#feature').on('change', function () {
 		// 告诉$.ajax方法不要设置参数类型
 		contentType: false,
 		success: function (response) {
-			console.log(response)
+			// console.log(response)
 			$('#thumbnail').val(response[0].cover);
 		}
 	})
