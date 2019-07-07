@@ -4,7 +4,7 @@ $.ajax({
 	url: '/posts',
 	success: function (response) {
 		console.log(response);
-		
+
 		var html = template('postsTpl', response);
 		$('#postsBox').html(html);
 		var page = template('pageTpl', response);
@@ -12,17 +12,8 @@ $.ajax({
 	}
 });
 
-
-
-// 处理日期时间格式
-function formateDate(date) {
-	// 将日期时间字符串转换成日期对象
-	date = new Date(date);
-	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-}
-
 // 分页
-function changePage (page) {
+function changePage(page) {
 	// 向服务器端发送请求 获取文章列表数据
 	$.ajax({
 		type: 'get',
@@ -45,7 +36,7 @@ $.ajax({
 	url: '/categories',
 	success: function (response) {
 		console.log(response)
-		var html = template('categoryTpl', {data: response});
+		var html = template('categoryTpl', { data: response });
 		$('#categoryBox').html(html);
 	}
 })
@@ -69,3 +60,18 @@ $('#filterForm').on('submit', function () {
 	// 阻止表单默认提交行为
 	return false;
 });
+
+$('#postsBox').on('click', '.delete', function () {
+	if (confirm('您真的要进行删除操作吗?')) {
+		var id = $(this).attr('data-id');
+		alert(id);
+		// return;
+		$.ajax({
+			type: 'delete',
+			url: '/posts/' + id,
+			success: function () {
+				location.reload();
+			}
+		})
+	}
+})

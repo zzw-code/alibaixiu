@@ -4,7 +4,7 @@ $.ajax({
 	type: 'get',
 	success: function (response) {
 		// console.log(response)
-		var html = template('categoryTpl', {data: response});
+		var html = template('categoryTpl', { data: response });
 		$('#category').html(html);
 	}
 })
@@ -14,7 +14,7 @@ $('#feature').on('change', function () {
 	// 获取到管理员选择到的文件
 	var file = this.files[0];
 	console.log(this.files);
-	
+
 	// 创建formData对象 实现二进制文件上传
 	var formData = new FormData();
 	// 将管理员选择到的文件追加到formData对象中
@@ -52,3 +52,52 @@ $('#addForm').on('submit', function () {
 	// 阻止表单默认提交的行为
 	return false;
 });
+
+//获取浏览器地址栏中的id参数
+var id = getUrlParams('id');
+
+//当前管理员在做文章修改操作
+if (id != undefined) {
+	$.ajax({
+		type: 'get',
+		url: '/posts/' + id,
+		success: function (response) {
+			$.ajax({
+				url: '/categories',
+				type: 'get',
+				success: function (categories) {
+					response.categories = categories;
+					var html = template('modifyTpl', response)
+					$('#parentBox').html(html);
+				}
+			})
+		}
+	})
+}
+
+//从浏览器的地址栏中获取查询参数
+function getUrlParams(name) {
+	var paramsAry = location.search.substr(1).split('&');
+	for (var i = 0; i < paramsAry.length; i++) {
+		var tmp = paramsAry[i].split('=');
+		if (tmp[0] == name) {
+			return tmp[1];
+		}
+	}
+}
+
+//当修改文章信息表单发生提交行为的时候
+$('#parentBox').on('submit', '#modifyForm', function () {
+	var formData = $(this).serialize();
+	var id = $(this).attr('data-id');
+	$.ajax({
+		type: 'put',
+		url: '/posts/' + id,
+		data: formData,
+		success: function () {
+			location.href = '/admin/posts.html'
+		}
+	})
+
+	return false;
+})
