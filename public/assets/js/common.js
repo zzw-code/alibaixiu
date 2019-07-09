@@ -20,3 +20,17 @@ function formateDate(date) {
   date = new Date(date);
   return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 }
+
+//向服务器端发送请求 索要登录信息
+
+$.ajax({
+  type: 'get',
+  url: '/users/' + userId,
+  success: function (res) {
+    // console.log(res);
+    // return;
+
+    $('.avatar').attr('src', res.avatar);
+    $('.profile .name').html(res.nickName);
+  }
+});

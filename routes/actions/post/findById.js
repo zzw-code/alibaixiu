@@ -12,9 +12,9 @@ module.exports = async (req, res) => {
 	const { error } = Joi.validate(id, schema)
 	// 数据格式没有通过验证
 	if (error) return res.status(400).send({message: error.message});
-	// 通过验证
+	// 通过验证z
 	// 查询文章信息
-	const post = await Post.findById(id);
+	const post = await Post.findById(id).populate('category author');
 	// 响应
 	return res.send(post);
 	
